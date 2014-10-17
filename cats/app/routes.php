@@ -22,3 +22,7 @@ Route::get('/cats', function () {
 Route::get('cats/{id}', function ($id) {
     return "Cat #$id";
 })->where('id', '[0-9]+'); // id is number only
+
+Route::get('about', function () {
+    return View::make('about')->with('number_of_cats', 9000);
+});
