@@ -11,10 +11,14 @@
 |
 */
 
-Route::get('/', function(){
+Route::get('/', function () {
+    return Redirect::to('cats');
+});
+
+Route::get('/cats', function () {
     return "All cats";
 });
 
-Route::get('cats/{id}', function($id){
+Route::get('cats/{id}', function ($id) {
     return "Cat #$id";
 })->where('id', '[0-9]+'); // id is number only
