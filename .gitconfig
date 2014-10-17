@@ -1,0 +1,12 @@
+[color]
+	ui = true
+[alias]
+	h = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	ci = commit
+	co = checkout
+	br = branch
+[user]
+	name = Doua Thao
+	email = ...
+[core]
+	excludesfile = PATH to .gitignore_global
