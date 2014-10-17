@@ -1,0 +1,26 @@
+{
+  "name": "Building-Angular",
+  "version": "1.0.0",
+  "description": "code base on \"Build your own angularjs\" book",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/intern-client config=tests/intern",
+    "test2": "./node_modules/.bin/intern-runner config=tests/intern"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/douathao/code-sample.git"
+  },
+  "author": "Doua Thao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/douathao/code-sample/issues"
+  },
+  "homepage": "https://github.com/douathao/code-sample",
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "intern": "^2.1.1",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.6.0"
+  }
+}
