@@ -1,4 +1,4 @@
-Code Sample
+JavaScript - Console
 ==============
 
-*Sample are in different branches*
+*Available Chrome browser function*
