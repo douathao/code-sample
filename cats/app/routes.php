@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
+Route::get('/', function(){
+    return "All cats";
 });
+
+Route::get('cats/{id}', function($id){
+    return "Cat #$id";
+})->where('id', '[0-9]+'); // id is number only
