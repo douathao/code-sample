@@ -1,4 +1,2 @@
-Code Sample
+JavaScript Code
 ==============
-
-*Sample are in different branches*
