@@ -1,4 +1,4 @@
-Code Sample
+D3
 ==============
 
-*Sample are in different branches*
+*Sample D3 code*
