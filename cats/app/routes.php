@@ -176,6 +176,11 @@ Route::get('sql-injection-not-vulnerable', function(){
     DB::raw("SELECT * FROM cats WHERE name = ?", array($name)));
 });
 
+Route::filter('https', function() {
+  if (!Request::secure())
+    return Redirect::secure(URI::current());
+});
+
 // bind a variable to a specfic view each time
 View::composer('cats.edit', function ($view) {
   $breeds = Breed::all();
