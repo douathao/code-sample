@@ -1,4 +1,10 @@
-Code Sample
+Phantom JS
 ==============
 
-*Sample are in different branches*
+Install PhantomJS: brew update && brew install phantomjs
+
+Run PhantomJS in terminal: phantomjs
+
+Exit PhantomJS: phantom.exit()
+
+Run script: phantomjs script.js
