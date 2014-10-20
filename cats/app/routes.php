@@ -11,6 +11,55 @@
 |
 */
 
+Route::get('login', function(){
+  return View::make('login');
+});
+
+Route::post('login', function(){
+  if(Auth::attempt(Input::only('username', 'password'))) {
+    return Redirect::intended('/');
+  } else {
+    return Redirect::back()
+      ->withInput()
+      ->with('error', "Invalid credentials");
+  }
+});
+
+Route::get('logout', function(){
+  Auth::logout();
+  return Redirect::to('/')
+    ->with('message', 'You are now logged out');
+});
+
+// pass in model cat so you don't have to do Cat::find($id)
+Route::model('cat', 'Cat');
+
+/**
+ * Route in here require authentication
+ */
+Route::group(array('before'=>'auth'), function(){
+  /**
+   * Create a cat
+   */
+  Route::post('cats', function(){
+    $cat = Cat::create(Input::all());
+    $cat->user_id = Auth::user()->id; if($cat->save()){
+      return Redirect::to('cats/' . $cat->id)
+        ->with('message', 'Successfully created profile!');
+    } else {
+      return Redirect::back()
+        ->with('error', 'Could not create profile');
+    }
+  });
+
+  Route::get('cats/create', function() {
+    $cat = new Cat;
+    return View::make('cats.edit')
+      ->with('cat', $cat)
+      ->with('method', 'post');
+  });
+
+});
 
 
 Route::get('/', function () {
@@ -23,15 +72,6 @@ Route::get('/cats', function () {
     ->with('cats', $cats);
 });
 
-// pass in model cat so you don't have to do Cat::find($id)
-Route::model('cat', 'Cat');
-
-Route::get('cats/create', function() {
-  $cat = new Cat;
-  return View::make('cats.edit')
-    ->with('cat', $cat)
-    ->with('method', 'post');
-});
 
 Route::get('cats/{cat}', function (Cat $cat) {
   return View::make('cats.single')
@@ -52,22 +92,20 @@ Route::get('cats/{cat}/delete', function(Cat $cat) {
     ->with('method', 'delete');
 });
 
-/**
- * Create a cat
- */
-Route::post('cats', function(){
-  $cat = Cat::create(Input::all());
-  return Redirect::to('cats/' . $cat->id)
-    ->with('message', 'Successfully created page!');
-});
 
 /**
  * Update a cat
  */
 Route::put('cats/{cat}', function(Cat $cat) {
-  $cat->update(Input::all());
-  return Redirect::to('cats/' . $cat->id)
-    ->with('message', 'Successfully updated page!');
+  // check to see if user can edit the cat
+  if(Auth::user()->canEdit($cat)){
+    $cat->update(Input::all());
+    return Redirect::to('cats/' . $cat->id)
+      ->with('message', 'Successfully updated profile!');
+  } else {
+    return Redirect::to('cats/' . $cat->id)
+      ->with('error', "Unauthorized operation");
+  }
 });
 
 /**
