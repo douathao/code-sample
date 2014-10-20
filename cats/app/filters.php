@@ -77,3 +77,11 @@ Route::filter('csrf', function () {
     throw new Illuminate\Session\TokenMismatchException;
   }
 });
+
+/**
+ * Redirect a URL to https
+ */
+Route::filter('https', function() {
+  if (!Request::secure())
+    return Redirect::secure(URI::current());
+});
