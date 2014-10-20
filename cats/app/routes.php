@@ -177,6 +177,11 @@ Route::get('sql-injection-not-vulnerable', function () {
 
 Route::get('user/{nickname}/photos', array('uses' => 'UserController@photos'));
 
+/**
+ * Will create all the REST routes
+ */
+Route::resource('toy', 'ToyController');
+
 // bind a variable to a specfic view each time
 View::composer('cats.edit', function ($view) {
   $breeds = Breed::all();
