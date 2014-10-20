@@ -23,6 +23,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
    */
   protected $hidden = array('password', 'remember_token');
 
+  // Laravel provide by default a protection against mass assignment security issues.
+  // That's why you have to manually define which fields could be "mass assigned"
+  // * need this for testLoggedInUserCanCreateCat
+  protected $fillable = array('username', 'password', 'is_admin');
+
   public function getAuthIdentifier() {
     return $this->getKey();
   }
