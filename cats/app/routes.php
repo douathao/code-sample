@@ -15,22 +15,16 @@ Route::get('login', function () {
   return View::make('login');
 });
 
-Route::post('login', function () {
-  if (Auth::attempt(Input::only('username', 'password'))) {
-    return Redirect::intended('/');
-  } else {
-    return Redirect::back()
-      ->withInput()
-      ->with('error', "Invalid credentials");
-  }
-});
-
-Route::get('logout', function () {
+/**
+ * logout a user
+ * filter with csrf - can apply many filter with |
+ */
+Route::get('logout', array('before'=>'csrf', function () {
   Auth::logout();
 
   return Redirect::to('/')
     ->with('message', 'You are now logged out');
-});
+}));
 
 // pass in model cat so you don't have to do Cat::find($id)
 Route::model('cat', 'Cat');
@@ -109,30 +103,49 @@ Route::get('cats/{cat}/delete', function (Cat $cat) {
 });
 
 /**
- * Update a cat
+ * Route in here will prevent Cross-site request forgery
+ * usually will have route that are POST, PUT, and DELETE
  */
-Route::put('cats/{cat}', function (Cat $cat) {
-  // check to see if user can edit the cat
-  if (Auth::user()->canEdit($cat)) {
-    $cat->update(Input::all());
+Route::group(array('before' => 'csrf'), function () {
 
-    return Redirect::to('cats/' . $cat->id)
-      ->with('message', 'Successfully updated profile!');
-  } else {
-    return Redirect::to('cats/' . $cat->id)
-      ->with('error', "Unauthorized operation");
-  }
+  Route::post('login', function () {
+    if (Auth::attempt(Input::only('username', 'password'))) {
+      return Redirect::intended('/');
+    } else {
+      return Redirect::back()
+        ->withInput()
+        ->with('error', "Invalid credentials");
+    }
+  });
+
+  /**
+   * Update a cat
+   */
+  Route::put('cats/{cat}', function (Cat $cat) {
+    // check to see if user can edit the cat
+    if (Auth::user()->canEdit($cat)) {
+      $cat->update(Input::all());
+
+      return Redirect::to('cats/' . $cat->id)
+        ->with('message', 'Successfully updated profile!');
+    } else {
+      return Redirect::to('cats/' . $cat->id)
+        ->with('error', "Unauthorized operation");
+    }
+  });
+
+  /**
+   * Delete a cat
+   */
+  Route::delete('cats/{cat}', function (Cat $cat) {
+    $cat->delete();
+
+    return Redirect::to('cats')
+      ->with('message', 'Successfully deleted page!');
+  });
+
 });
 
-/**
- * Delete a cat
- */
-Route::delete('cats/{cat}', function (Cat $cat) {
-  $cat->delete();
-
-  return Redirect::to('cats')
-    ->with('message', 'Successfully deleted page!');
-});
 
 Route::get('cats/breeds/{name}', function ($name) {
   $breed = Breed::whereName($name)->with('cats')->first();

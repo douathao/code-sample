@@ -2,6 +2,7 @@
 @section('header')
 <a href="{{url('/')}}">Back to overview</a>
 <h2>
+  {{-- used three curly braces to prevent xss --}}
   {{{$cat->name}}}
 </h2>
 
