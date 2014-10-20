@@ -19,7 +19,7 @@ Route::get('login', function () {
  * logout a user
  * filter with csrf - can apply many filter with |
  */
-Route::get('logout', array('before'=>'csrf', function () {
+Route::get('logout', array('before' => 'csrf', function () {
   Auth::logout();
 
   return Redirect::to('/')
@@ -146,7 +146,6 @@ Route::group(array('before' => 'csrf'), function () {
 
 });
 
-
 Route::get('cats/breeds/{name}', function ($name) {
   $breed = Breed::whereName($name)->with('cats')->first();
 
@@ -162,19 +161,21 @@ Route::get('about', function () {
 /**
  * SQL injection
  */
-Route::get('sql-injection-vulnerable', function(){
+Route::get('sql-injection-vulnerable', function () {
   $name = "'Bobby' OR 1=1";
-  return DB::select(
-    DB::raw("SELECT * FROM cats WHERE name = $name") );
+
+  return DB::select(DB::raw("SELECT * FROM cats WHERE name = $name"));
 });
 /**
  * No SQL injection
  */
-Route::get('sql-injection-not-vulnerable', function(){
+Route::get('sql-injection-not-vulnerable', function () {
   $name = "'Bobby' OR 1=1";
-  return DB::select(
-    DB::raw("SELECT * FROM cats WHERE name = ?", array($name)));
+
+  return DB::select(DB::raw("SELECT * FROM cats WHERE name = ?", array($name)));
 });
+
+Route::get('user/{nickname}/photos', array('uses' => 'UserController@photos'));
 
 // bind a variable to a specfic view each time
 View::composer('cats.edit', function ($view) {
