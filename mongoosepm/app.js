@@ -7,7 +7,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
+var project = require('./routes/project');
 
 var app = express();
 
@@ -25,13 +26,33 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+
+// USER ROUTES
+app.get('/user', user.index);                 // Current user profile
+app.get('/user/new', user.create);            // Create new user form
+app.post('/user/new', user.doCreate);         // Create new user action
+app.get('/user/edit', user.edit);             // Edit current user form
+app.post('/user/edit', user.doEdit);          // Edit current user action
+app.get('/user/delete', user.confirmDelete);  // delete current user form
+app.post('/user/delete', user.doDelete);      // Delete current user action
+app.get('/login', user.login);                // Login form
+app.post('/login', user.doLogin);             // Login action
+app.get('/logout', user.doLogout);            // Logout current user
+
+// PROJECT ROUTES
+app.get('/project/new', project.create);              // Create new project form
+app.post('/project/new', project.doCreate);           // Create new project action
+app.get('/project/:id', project.displayInfo);         // Display project info
+app.get('/project/edit/:id', project.edit);           // Edit selected project form
+app.post('/project/edit/:id', project.doEdit);        // Edit selected project action
+app.get('/project/delete/:id', project.confirmDelete);// Delete selected product form
+app.post('/project/delete/:id', project.doDelete);    // Delete selected project action
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handlers
@@ -39,24 +60,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
     });
+  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
-
 
 module.exports = app;
