@@ -6,6 +6,8 @@ Getting Started with Laravel 4
 
 *This is a learning hand-on experience*
 
+[Laravel Cheat Sheet](http://cheats.jesse-obrien.ca/)
+
 ##Artisan
 ###Keeping up with the latest changes
 
