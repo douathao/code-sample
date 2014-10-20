@@ -1,4 +1,4 @@
-Code Sample
+Mongoose
 ==============
 
-*Sample are in different branches*
+*Mongoose for Application Development*
