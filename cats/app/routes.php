@@ -159,6 +159,23 @@ Route::get('about', function () {
   return View::make('about')->with('number_of_cats', 9000);
 });
 
+/**
+ * SQL injection
+ */
+Route::get('sql-injection-vulnerable', function(){
+  $name = "'Bobby' OR 1=1";
+  return DB::select(
+    DB::raw("SELECT * FROM cats WHERE name = $name") );
+});
+/**
+ * No SQL injection
+ */
+Route::get('sql-injection-not-vulnerable', function(){
+  $name = "'Bobby' OR 1=1";
+  return DB::select(
+    DB::raw("SELECT * FROM cats WHERE name = ?", array($name)));
+});
+
 // bind a variable to a specfic view each time
 View::composer('cats.edit', function ($view) {
   $breeds = Breed::all();
