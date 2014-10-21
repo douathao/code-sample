@@ -55,3 +55,35 @@ exports.index = function(req, res) {
     res.redirect('/login');
   }
 };
+
+// GET login page
+exports.login = function(req, res) {
+  res.render('login-form', {title: 'Log in'});
+};
+
+// POST login page
+exports.doLogin = function(req, res) {
+  if (req.body.Email) {
+    User.findOne(
+      {'email': req.body.Email},
+      '_id name email',
+      function(err, user) {
+        if (!err) {
+          if (!user) {
+            res.redirect('/login?404=user');
+          } else {
+            req.session.user = {
+              'name': user.name,
+              'email': user.email,
+              '_id': user._id
+            };
+            req.session.loggedin = 'true';
+            console.log('Logged in user: ' + user);
+            res.redirect('/user');
+          }
+        }
+      });
+  } else {
+    res.redirect('/login?404=error');
+  }
+};
