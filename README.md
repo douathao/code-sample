@@ -1,4 +1,4 @@
-Code Sample
+Angular
 ==============
 
-*Sample are in different branches*
+*Sample angular code*

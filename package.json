@@ -1,0 +1,25 @@
+{
+  "name": "code-sample",
+  "version": "1.0.0",
+  "description": "Angular",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "karma": "^0.12.24",
+    "karma-chrome-launcher": "^0.1.5",
+    "karma-jasmine": "^0.1.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/douathao/code-sample.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/douathao/code-sample/issues"
+  },
+  "homepage": "https://github.com/douathao/code-sample"
+}
