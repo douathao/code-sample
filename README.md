@@ -1,4 +1,4 @@
-Code Sample
+Jasmine
 ==============
 
-*Sample are in different branches*
+*Simple Jasmine test*
