@@ -17,6 +17,7 @@ define([
         this.numberInput1 = 1;
         this.numberInput2 = 2;
         this.stringInput1 = '1';
+        this.stringInput2 = 'not a number';
       });
 
       // run after each test
@@ -34,6 +35,12 @@ define([
         output = Numbers.add(this.stringInput1, this.numberInput2);
 
         expect(output).toEqual(3);
+      });
+
+      it('should ignore the argument if it is not a parseable string', function () {
+        output = Numbers.add(this.numberInput1, this.stringInput2);
+
+        expect(output).toEqual(1);
       });
     });
   });
