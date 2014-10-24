@@ -1,4 +1,4 @@
-/* globals describe, define, it, expect, beforeEach */
+/* globals describe, define, it, expect, beforeEach, xit, pending, xdescribe */
 define([
   'Numbers'
 ], function(
@@ -41,6 +41,25 @@ define([
         output = Numbers.add(this.numberInput1, this.stringInput2);
 
         expect(output).toEqual(1);
+      });
+
+      it('should be able to substract', function () {
+        pending();
+      });
+
+      xit('should be able to multiply', function () {
+        // is in pending mode because of xit
+      });
+    });
+
+    // is in pending mode because of xdescribe
+    xdescribe('should do something awsome', function () {
+      it('should do nothing since describle is in pending mode', function () {
+
+      });
+
+      it('all test in describe will not be run since describe is in pending mode', function () {
+
       });
     });
   });
