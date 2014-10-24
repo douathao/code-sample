@@ -7,6 +7,10 @@ define(function () {
       var sum = 0;
 
       input.forEach(function (value) {
+        if (typeof value === 'string') {
+          value = value >> 0;
+        }
+
         sum += value;
       });
 
