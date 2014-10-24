@@ -68,6 +68,15 @@ define([
         // spyOn(events, ...
         // events.publish.and.stub();
 
+        // all spyOn have a calls property
+        // the event should not be call yet
+        expect(events.publish.calls.any()).toBe(false);
+
+        // jasmine have global variable for any
+        // jasmine.any(String)
+        // jasmine.any(Object)
+        // can be use with expect..toEqual([jasmine.any(String), jasmine.any(Object)]);
+
         Numbers.add(this.numberInput1, this.numberInput2);
 
         expect(events.publish).toHaveBeenCalled();
@@ -75,6 +84,29 @@ define([
           'added',
           { args: [this.numberInput1, this.numberInput2], result: 3}
         );
+
+        // spy can get arguments call of the function
+        // the params is the order of the call
+        // expect(events.publish.calls.argsFor(1)).toEqual();
+        //
+        // get the most recent call
+        // expect(events.publish.calls.mostRecent().args).toEqual();
+        //
+        // get all the arguments call
+        // events.publish.calls.allArgs()
+        //
+        // get all the call
+        // events.publish.calls.all()
+        //
+        // reset the spy calls
+        // events.publish.reset();
+
+        // the event should be call
+        // expect(events.publish.calls.any()).toBe(true);
+        expect(events.publish.calls.count()).toBe(1);
+
+        // spy will keep tracking the number of time the function is call
+        // you can run Numbers.add.. again and the count will be 2
       });
 
       it('should be able to substract', function () {
