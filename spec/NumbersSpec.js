@@ -1,8 +1,10 @@
-/* globals describe, define, it, expect, beforeEach, xit, pending, xdescribe */
+/* globals describe, define, it, expect, beforeEach, xit, pending, xdescribe, spyOn */
 define([
-  'Numbers'
+  'Numbers',
+  'events'
 ], function(
-  Numbers
+  Numbers,
+  events
 ) {
   'use strict';
   // Test suite
@@ -41,6 +43,18 @@ define([
         output = Numbers.add(this.numberInput1, this.stringInput2);
 
         expect(output).toEqual(1);
+      });
+
+      it('should publish an added event showing the arguments passed to the function and result', function () {
+        spyOn(events, 'publish');
+
+        Numbers.add(this.numberInput1, this.numberInput2);
+
+        expect(events.publish).toHaveBeenCalled();
+        expect(events.publish).toHaveBeenCalledWith(
+          'added',
+          { args: [this.numberInput1, this.numberInput2], result: 3}
+        );
       });
 
       it('should be able to substract', function () {

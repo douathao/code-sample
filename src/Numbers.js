@@ -1,5 +1,9 @@
 /* global define */
-define(function () {
+define([
+  'events'
+], function (
+  events
+) {
   'use strict';
   var Number = {
     add: function () {
@@ -12,6 +16,11 @@ define(function () {
         }
 
         sum += value;
+      });
+
+      events.publish('added', {
+        args: input,
+        result: sum
       });
 
       return sum;
