@@ -1,7 +1,13 @@
-function Song() {
-}
+/* global define */
+define(function () {
+  'use strict';
+  function Song() {
+  }
 
-Song.prototype.persistFavoriteStatus = function(value) {
-  // something complicated
-  throw new Error("not yet implemented");
-};
+  Song.prototype.persistFavoriteStatus = function( /* value */ ) {
+    // something complicated
+    throw new Error('not yet implemented');
+  };
+
+  return Song;
+});
