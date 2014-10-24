@@ -46,7 +46,27 @@ define([
       });
 
       it('should publish an added event showing the arguments passed to the function and result', function () {
+        // spyOn will not run through the function unless:
+        // spyOn(events, 'publish').and.callThrough();
+        // test this by adding alert('test') inside the publish function
+        // * you make all the test above pending to play around with this.
         spyOn(events, 'publish');
+
+        // spy can return value
+        // spyOn(events, 'publish').and.returnValue(false);
+
+        // spy can call a fake function instead of the original event
+        // spyOn(events, 'publish').and.callFake(function () { // do something });
+
+        // spy can throw error
+        // spyOn(events, 'publish').and.throwError('error');
+          // expect(function () {
+          //   Numbers.add(this.numberInput1, this.numberInput2);
+          // }).toThrowError('error');
+
+        // spy call the actually function
+        // spyOn(events, ...
+        // events.publish.and.stub();
 
         Numbers.add(this.numberInput1, this.numberInput2);
 
