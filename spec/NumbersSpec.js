@@ -1,4 +1,4 @@
-/* globals describe, define, it, expect, beforeEach, xit, pending, xdescribe, spyOn */
+/* globals describe, define, it, expect, beforeEach, xit, pending, xdescribe, spyOn, afterEach */
 define([
   'Numbers',
   'events',
@@ -141,6 +141,30 @@ define([
 
       it('all test in describe will not be run since describe is in pending mode', function () {
 
+      });
+    });
+
+    describe('The addAfterDelay method', function () {
+      var noop = function () {};
+
+      beforeEach(function () {
+        spyOn(Numbers, 'add');
+
+        jasmine.clock().install();
+      });
+
+      afterEach(function () {
+        jasmine.clock().uninstall();
+      });
+
+      it('should invoke the add method after specified delay', function () {
+        Numbers.addAfterDelay(1000, noop, 1, 2);
+
+        expect(Numbers.add).not.toHaveBeenCalled();
+
+        jasmine.clock().tick(1001);
+
+        expect(Numbers.add).toHaveBeenCalled();
       });
     });
   });

@@ -24,6 +24,16 @@ define([
       });
 
       return sum;
+    },
+    addAfterDelay: function ( /* delay, callBack */) {
+      var _this = this;
+      var timeDelay = [].shift.call(arguments);
+      var callBack = [].shift.call(arguments);
+      var input = arguments;
+
+      window.setTimeout(function () {
+        callBack(_this.add.apply(this, input));
+      }, timeDelay);
     }
   };
 
