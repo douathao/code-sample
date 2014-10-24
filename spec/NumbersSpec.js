@@ -1,10 +1,12 @@
 /* globals describe, define, it, expect, beforeEach, xit, pending, xdescribe, spyOn */
 define([
   'Numbers',
-  'events'
+  'events',
+  'lib/matchers'
 ], function(
   Numbers,
-  events
+  events,
+  matchers
 ) {
   'use strict';
   // Test suite
@@ -20,6 +22,9 @@ define([
         this.numberInput2 = 2;
         this.stringInput1 = '1';
         this.stringInput2 = 'not a number';
+
+        // add custom matcher
+        jasmine.addMatchers(matchers);
       });
 
       // run after each test
@@ -107,6 +112,16 @@ define([
 
         // spy will keep tracking the number of time the function is call
         // you can run Numbers.add.. again and the count will be 2
+      });
+
+      it('should return numbers that are either odd or event', function () {
+        output = Numbers.add(this.numberInput1, this.numberInput2);
+
+        expect(output).toBeOdd();
+
+        output = Numbers.add(this.numberInput1, this.numberInput1);
+
+        expect(output).not.toBeOdd();
       });
 
       it('should be able to substract', function () {
