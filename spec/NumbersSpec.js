@@ -167,5 +167,16 @@ define([
         expect(Numbers.add).toHaveBeenCalled();
       });
     });
+
+    // example of using Jasmine for async test
+    xdescribe('Async Test', function () {
+      it('should get 2 server', function (done) {
+        // assume that asyncFn is doing a ajax or rest call passing in a callback that return the data
+        Numbers.asyncFn(function (data) {
+          expect(data).toEqual(2);
+          done();
+        });
+      });
+    });
   });
 });
