@@ -93,3 +93,11 @@ cd(iframe domNode | top) // top to go back
 
 // Use to view all of chrome inspector for worker
 chrome://inspect
+
+// assert
+// If the value passed in the first argument is false, the function will log a message given as the second argument in the web console. If the expression is true, nothing is logged.
+console.assert(document.querySelector('body'), "Missing 'body' element");
+
+// console table
+// This function displays the provided object or array as a table:
+console.table(/* object or array */);
